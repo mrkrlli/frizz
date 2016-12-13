@@ -107,6 +107,21 @@ environments:
       - "logs/*"
 ```
 
+### Set cache-control headers
+
+If you want to set cache-control headers for the uploaded resources, you can specify
+this in `frizz.yml`. Specify the [mime-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types),
+and the cache-control header string after that. If no values are provided, no cache-control headers will be set.
+
+
+```yaml
+environments:
+  production:
+    cache-control:
+      text/css: "max-age=31536000"
+      text/html: "no-cache, max-age=0"
+```
+
 ### Redirects
 
 You can setup [S3 redirects](http://docs.aws.amazon.com/AmazonS3/latest/dev/how-to-page-redirect.html)
