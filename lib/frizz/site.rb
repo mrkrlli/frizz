@@ -12,7 +12,7 @@ module Frizz
       local_options = take_keys(options, [:redirect_rules, :prefer_gzip, :cache_control])
       @local = Local.new(path_to_deploy, ignorance, local_options)
 
-      remote_options = take_keys(options, [:region])
+      remote_options = take_keys(options, [:region, :cache_control])
       @remote = Remote.new(host, ignorance, remote_options)
     end
 

@@ -28,6 +28,18 @@ module Frizz
       end
     end
 
+    def reupload_to_sync_cache_control?(remote_file_key)
+      head_object = client.head_object({
+        bucket: bucket_name,
+        key: remote_file_key
+      })
+
+      remote_cache_control_value = head_object.cache_control
+      current_cache_control_value = cache_control_option(options, remote_file_key)[:cache_control]
+
+      return remote_cache_control_value != current_cache_control_value
+    end
+
     def upload(file, key, options = {})
       encoding_option = {}
 
@@ -71,6 +83,7 @@ module Frizz
 
       mime_type = MIME::Types.type_for(key).first.content_type
       cache_control_value = options[:cache_control][mime_type]
+
       if cache_control_value
         cache_control_option_hash[:cache_control] = cache_control_value
       end

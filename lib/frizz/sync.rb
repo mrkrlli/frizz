@@ -20,9 +20,17 @@ module Frizz
           remote.delete(remote_file)
           changes << remote_file.key
         elsif local_file_md5 == remote_file.etag.gsub('"', '')
-          puts "#{local_path}: unchanged"
+          if remote.reupload_to_sync_cache_control?(remote_file.key)
+            puts "#{local_path}: cache_control updated".green
 
-          local_index.delete(local_path)
+            upload(local_path, local_file)
+            local_index.delete(local_path)
+            changes << local_path
+          else
+            puts "#{local_path}: unchanged"
+
+            local_index.delete(local_path)
+          end
         else
           puts "#{local_path}: updated".green
 
