@@ -47,6 +47,7 @@ module Frizz
         key: key
       }
       object_options.merge! encoding_option
+      object_options.merge! cache_control_option(options, key)
 
       object_options[:website_redirect_location] = options[:redirect_to] if options[:redirect_to]
 
@@ -63,6 +64,19 @@ module Frizz
     private
 
     attr_reader :bucket_name, :ignorance, :options
+
+    def cache_control_option(options, key)
+      cache_control_option_hash = {}
+      return cache_control_option_hash unless options[:cache_control]
+
+      mime_type = MIME::Types.type_for(key).first.content_type
+      cache_control_value = options[:cache_control][mime_type]
+      if cache_control_value
+        cache_control_option_hash[:cache_control] = cache_control_value
+      end
+
+      cache_control_option_hash
+    end
 
     def ignore?(object)
       # for remote files, you don't need to ignore for gzip preference,
