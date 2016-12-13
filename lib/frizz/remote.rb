@@ -28,7 +28,7 @@ module Frizz
       end
     end
 
-    def reupload_to_sync_cache_control?(remote_file_key)
+    def cache_control_changed?(remote_file_key)
       head_object = client.head_object({
         bucket: bucket_name,
         key: remote_file_key
