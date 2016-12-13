@@ -41,7 +41,8 @@ module Frizz
                   ignore: env.ignore,
                   redirect_rules: env.redirect_rules,
                   region: env.region,
-                  prefer_gzip: env.prefer_gzip
+                  prefer_gzip: env.prefer_gzip,
+                  cache_control: env.cache_control
                 ).deploy!
               end
             end

@@ -117,7 +117,7 @@ and the cache-control header string after that. If no values are provided, no ca
 ```yaml
 environments:
   production:
-    cache-control:
+    cache_control:
       text/css: "max-age=31536000"
       text/html: "no-cache, max-age=0"
 ```
